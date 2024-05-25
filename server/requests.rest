@@ -1,0 +1,18 @@
+# POST http://localhost:3000/signup
+# Content-Type: application/json
+
+# {
+#     "fullname": "john",
+#     "email": "john@gmail.com",
+#     "password": "John@123"
+# }
+
+# "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MDFiZGM3YjJjNTc2YWI5OGZhMDQzOSIsImlhdCI6MTcxMTM5MDE1Mn0.OKHJLku6YNHlPz9dSyrBQUvI1gAVP0apzd2rHh2UhNE"
+
+
+POST http://localhost:3000/get-blog
+Content-Type: application/json
+
+{
+    "blog_id": "Trends-to-Watch-Fashion-Forecast-for-the-Coming-SeasonGdMsHqh5UBbOoGmikRTjH"
+}
