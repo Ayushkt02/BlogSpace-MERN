@@ -10,9 +10,19 @@
 # "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MDFiZGM3YjJjNTc2YWI5OGZhMDQzOSIsImlhdCI6MTcxMTM5MDE1Mn0.OKHJLku6YNHlPz9dSyrBQUvI1gAVP0apzd2rHh2UhNE"
 
 
-POST http://localhost:3000/get-blog
+POST http://localhost:3000/change-password
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MDFiZGM3YjJjNTc2YWI5OGZhMDQzOSIsImlhdCI6MTcxMTM5MDE1Mn0.OKHJLku6YNHlPz9dSyrBQUvI1gAVP0apzd2rHh2UhNE
 
 {
-    "blog_id": "Trends-to-Watch-Fashion-Forecast-for-the-Coming-SeasonGdMsHqh5UBbOoGmikRTjH"
+    "currentPassword": "JohnKumar@123",
+    "newPassword": "Johnr@123"
 }
+
+# POST http://localhost:3000/signin
+# Content-Type: application/json
+
+# {
+#     "email": "john@gmail.com",
+#     "password": "JohnKumar@123"
+# }
