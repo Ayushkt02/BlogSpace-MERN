@@ -16,6 +16,7 @@ const EditProfile = () => {
     let bioLimit = 150;
 
     let profileImgEle = useRef();
+    let editProfileForm = useRef();
 
     const [ profile, setProfile ] = useState(profileDataStructure);
     const [ loading, setLoading ] = useState(true);
@@ -91,11 +92,62 @@ const EditProfile = () => {
         }
     }
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        let form = new FormData(editProfileForm.current);
+        let formData = { };
+        for(let [key, value] of form.entries()){
+            formData[key] = value;
+        }
+        
+        let { username, bio, youtube, facebook, twitter, github, instagram, website } = formData;
+
+        if(username.length < 3){
+            return toast.error("Username should be atleast 3 letters long");
+        }
+        if(username.includes(" ")){
+            return toast.error("Username should not contain space");
+        }
+        if(bio.length > bioLimit){
+            return toast.error(`Bio should not be more than ${bioLimit}`);
+        }
+
+        let loadingToast = toast.loading("Updating...");
+        e.target.setAttribute("disabled", true);
+
+        axios.post(import.meta.env.VITE_SERVER_DOMAIN + "/update-profile", {
+            username, bio, 
+            social_links: { youtube, facebook, twitter, github, instagram, website }
+        },{
+            headers:{
+                'Authorization': `Bearer ${access_token}`
+            }
+        })
+        .then(({data}) => {
+            if(userAuth.username != data.username){
+                let newUserAuth = { ...userAuth, username: data.username };
+
+                storeInSession("user", JSON.stringify(newUserAuth));
+                setUserAuth(newUserAuth);
+            }
+
+            toast.dismiss(loadingToast);
+            e.target.removeAttribute("disabled");
+            toast.success("Profile Updated Successfully...");
+        })
+        .catch(({response}) => {
+            toast.dismiss(loadingToast);
+            e.target.removeAttribute("disabled");
+            toast.error(response.data.error);
+        })
+    }
+    // https://www.instagram.com/tiwary_ayush2
     return(
         <AnimationWrapper>
             {
                 loading ? <Loader/>:
-                <form>
+                <form ref={editProfileForm}>
                     <Toaster/>
 
                     <h1 className="max-md:hidden">Edit Profile</h1>
@@ -142,7 +194,7 @@ const EditProfile = () => {
                                 }
                             </div>
 
-                            <button className="btn-dark w-auto px-10" type="submit">Update</button>
+                            <button className="btn-dark w-auto px-10" type="submit" onClick={handleSubmit} >Update</button>
 
                         </div>
 
