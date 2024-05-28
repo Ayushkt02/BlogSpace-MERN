@@ -1,8 +1,10 @@
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import logo from "../imgs/logo.png"
 import {Link, Outlet, useNavigate} from "react-router-dom"
 import { UserContext } from '../App'
 import UserNavigationPanal from "./user-navigation.component"
+import axios from "axios";
+
 
 const Navbar = () =>{
 
@@ -12,7 +14,23 @@ const Navbar = () =>{
 
 
 
-    const { userAuth, userAuth: { access_token, profile_img }} = useContext(UserContext);
+    const { userAuth, userAuth: { access_token, profile_img, new_notification_available }, setUserAuth} = useContext(UserContext);
+
+    useEffect(() => {
+        if(access_token){
+            axios.get(import.meta.env.VITE_SERVER_DOMAIN + "/new-notification", {
+                headers: {
+                    'Authorization': `Bearer ${access_token}`
+                }
+            })
+            .then(({ data }) => {
+                setUserAuth({ ...userAuth, ...data });
+            })
+            .catch(err => {
+                console.log(err);
+            })
+        }
+    }, [access_token])
 
     const handleSearch = (e) => {
         let query = e.target.value;
@@ -53,9 +71,13 @@ const Navbar = () =>{
                     {
                         access_token ?
                         <>
-                            <Link to="/dashboard/notification">
+                            <Link to="/dashboard/notifications">
                                 <button className="w-12 h-12 rounded-full bg-grey relative hover:bg-black/10">
                                     <i className="fi fi-rr-bell text-2xl block mt-1"></i>
+                                    {
+                                        new_notification_available?
+                                        <span className="bg-red w-3 h-3 rounded-full absolute z-10 top-2 right-2"></span>:""
+                                    }
                                 </button>
                             </Link>
 
