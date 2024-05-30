@@ -621,7 +621,7 @@ server.get("/new-notification", verifyJWT, (req, res) => {
 })
 
 server.post("/notifications", verifyJWT, (req, res) => {
-    let user_id = req.id;
+    let user_id = req.user;
     let { page, filter, deletedDocCount } = req.body;
     let maxLimit = 10;
     let findQuery = { notification_for: user_id, user: { $ne: user_id } };
@@ -638,12 +638,17 @@ server.post("/notifications", verifyJWT, (req, res) => {
     .skip(skipDocs)
     .limit(maxLimit)
     .populate("blog", "title blog_id")
+    .populate("user", "personal_info.fullname personal_info.username personal_info.profile_img")
     .populate("comment", "comment")
-    .populate("replyed_on_comment", "comment")
     .populate("reply", "comment")
     .sort({ createdAt: -1 })
     .select("createdAt type seen reply")
     .then(notifications => {
+        Notification.updateMany(findQuery, { seen: true })
+        .skip(skipDocs)
+        .limit(maxLimit)
+        .then(()=>console.log('notification seen'));
+
         return res.status(200).json({ notifications });
     })
     .catch(err => {
