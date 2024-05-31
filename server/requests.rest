@@ -1,5 +1,11 @@
-# "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZmFjYTgwZGJhYzQ5OTA5N2UxNzMwMCIsImlhdCI6MTcxNjkxODE3Mn0.pVRbPc10DU9j9RjSNze1iVTAt7sEziN5qk8niRoUsmo"
+# "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZmFjYTgwZGJhYzQ5OTA5N2UxNzMwMCIsImlhdCI6MTcxNzEzMjAxNH0.OXtMygrQ0px4XGAn-poqxj1m6_5homRLaf1io8tSOFo"
 
 
-GET http://localhost:3000/new-notification
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZmFjYTgwZGJhYzQ5OTA5N2UxNzMwMCIsImlhdCI6MTcxNjkxODE3Mn0.pVRbPc10DU9j9RjSNze1iVTAt7sEziN5qk8niRoUsmo
+POST http://localhost:3000/user-written-blogs
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZmFjYTgwZGJhYzQ5OTA5N2UxNzMwMCIsImlhdCI6MTcxNzEzMjAxNH0.OXtMygrQ0px4XGAn-poqxj1m6_5homRLaf1io8tSOFo
+Content-Type: application/json
+
+{
+    "page": 1,
+    "draft": true
+}
