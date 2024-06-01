@@ -29,7 +29,6 @@ const CommentField = ({ action, index = undefined, replyingTo = undefined, setRe
         })
         .then(({data}) => {
             setComment("");
-            console.log(data);
             data.commented_by = { personal_info: { username, profile_img, fullname } }
 
             let newCommentArr;
